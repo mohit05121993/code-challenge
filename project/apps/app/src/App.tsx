@@ -1,33 +1,16 @@
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { fetchPokemon } from "./store/pokemonSlice";
 import List from "ui/components/List";
-
-interface Pokemon {
-  name: string;
-  url?: string;
-}
-
-const api = "https://pokeapi.co/api/v2/pokemon?limit=151";
+import { RootState } from "./store/store";
 
 const App = () => {
-  const [pokemonList, setPokemonList] = useState<Pokemon[]>([]);
+  const dispatch = useDispatch();
+  const pokemonList = useSelector((state: RootState) => state.pokemon.list);
 
   useEffect(() => {
-    const fetchPokemon = async () => {
-      try {
-        const response = await fetch(api);
-        const data = await response.json();
-        const formattedData = data.results.map((pokemon: { name: string; url: string }) => ({
-          name: pokemon.name,
-          url: pokemon.url || ""
-        }));
-        setPokemonList(formattedData);
-      } catch (error) {
-        console.error("Error fetching Pokémon:", error);
-      }
-    };
-
-    fetchPokemon();
-  }, []);
+    dispatch(fetchPokemon());
+  }, [dispatch]);
 
   return (
     <>
