@@ -6,14 +6,12 @@ interface ListProps {
 
 const List: React.FC<ListProps> = ({ pokemonList }) => {
   return (
-    <div>
-      <ul style={{ listStyle: "none", padding: 0 }}>
-        {pokemonList.map((pokemon, index) => (
-          <li key={index} style={{ margin: "8px 0", fontSize: "18px" }}>
-            <span>#{index + 1} {pokemon.name}</span>
-          </li>
-        ))}
-      </ul>
+    <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fill, minmax(120px, 1fr))", gap: "10px", padding: "10px" }}>
+      {pokemonList.map((pokemon, index) => (
+        <div key={index} style={{ background: "#f8f9fa", padding: "10px", borderRadius: "8px", textAlign: "center", fontSize: "16px", fontWeight: "bold" }}>
+          <span>#{index + 1} {pokemon.name}</span>
+        </div>
+      ))}
     </div>
   );
 };
