@@ -17,7 +17,11 @@ export const fetchPokemon = createAsyncThunk("pokemon/fetchPokemon", async () =>
 const pokemonSlice = createSlice({
   name: "pokemon",
   initialState: { list: [] as Pokemon[] },
-  reducers: {},
+  reducers: {
+    removePokemon: (state, action) => {
+      state.list = state.list.filter(pokemon => pokemon.name !== action.payload);
+    }
+  },
   extraReducers: (builder) => {
     builder.addCase(fetchPokemon.fulfilled, (state, action) => {
       state.list = action.payload;
@@ -25,4 +29,5 @@ const pokemonSlice = createSlice({
   },
 });
 
+export const { removePokemon } = pokemonSlice.actions;
 export default pokemonSlice.reducer;

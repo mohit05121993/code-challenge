@@ -2,14 +2,18 @@ import React from "react";
 
 interface ListProps {
   pokemonList: { name: string; url?: string }[];
+  onRemove: (name: string) => void;
 }
 
-const List: React.FC<ListProps> = ({ pokemonList }) => {
+const List: React.FC<ListProps> = ({ pokemonList, onRemove }) => {
   return (
-    <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fill, minmax(120px, 1fr))", gap: "10px", padding: "10px" }}>
+    <div className="pokemon-grid">
       {pokemonList.map((pokemon, index) => (
-        <div key={index} style={{ background: "#f8f9fa", padding: "10px", borderRadius: "8px", textAlign: "center", fontSize: "16px", fontWeight: "bold" }}>
-          <span>#{index + 1} {pokemon.name}</span>
+        <div key={index} className="pokemon-card" onClick={() => pokemon.url && window.open(pokemon.url, "_blank")}> 
+          <span className="pokemon-name">{pokemon.name}</span>
+          <button className="remove-button" onClick={(e) => { e.stopPropagation(); onRemove(pokemon.name); }}>
+            Remove
+          </button>
         </div>
       ))}
     </div>
